@@ -1,0 +1,189 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<title>Roles - G13</title>
+<ui:include src="/pages/_header.xhtml"></ui:include>
+
+</h:head>
+
+<f:metadata>
+	<f:viewAction action="#{rolesBean.obtenerRoles()}" />
+</f:metadata>
+<h:body>
+<ui:include src="/pages/menu_header.xhtml"></ui:include>
+											<h:panelGroup style="display:block; text-align:center">
+
+<h2>Roles</h2>
+
+											</h:panelGroup>
+
+	<p:dialog header="Alerta" widgetVar="messegeDiolog" id="messegeDiolog" minHeight="40" styleClass="dialogoAlerta">
+		<h:outputLabel value="#{rolesBean.messege}" id="errorMessege"
+			></h:outputLabel>
+	</p:dialog>
+
+	<p:dialog widgetVar="crear" modal="true" header="Crear Rol">
+		<h:panelGroup style="display:block; text-align:center">
+
+			<h:form id="crearRolForm">
+				<h:panelGrid columns="2" id="panelFormulario" cellspacing="5"
+					styleClass="formulario">
+					<p:outputLabel value="Nombre" />
+
+
+					<p:inputText id="nombre" value="#{rolesBean.nombre}"
+						requiredMessage="Debe ingresar un Nombre" pt:placeholder="Nombre" />
+
+
+
+					<h:outputLabel></h:outputLabel>
+
+					<p:commandButton id="submit-button" value="Crear Rol"
+						oncomplete="" styleClass="botonCrear"
+						action="#{rolesBean.crearRol()}" update="messegeDiolog" />
+					<h:outputLabel></h:outputLabel>
+
+
+
+				</h:panelGrid>
+
+			</h:form>
+
+		</h:panelGroup>
+
+	</p:dialog>
+
+	<p:dialog widgetVar="modificar" id="panelModificar" modal="false"
+		header="Modificar Rol">
+		<h:panelGroup style="display:block; text-align:center">
+
+
+			<h:form id="modificarRol" styleClass="formulario">
+				<p:autoUpdate />
+				<h:panelGroup style="display:block; text-align:center">
+
+					<h:panelGrid columns="2" id="panelFormulario" cellspacing="5"
+						styleClass="formulario" cellpadding="5">
+
+						<p:outputLabel value="Nombre" />
+						<p:inputText id="nombre" value="#{rolesBean.nombre}"
+							requiredMessage="Debe ingresar un Nombre" pt:placeholder="Nombre" />
+
+						
+
+
+						<h:outputLabel></h:outputLabel>
+
+						<p:commandButton id="submit-button" value="Modificar Rol" update="messegeDiolog"
+							oncomplete="" action="#{rolesBean.modificarRol()}" />
+						<h:outputLabel></h:outputLabel>
+
+
+
+					</h:panelGrid>
+				</h:panelGroup>
+
+			</h:form>
+		</h:panelGroup>
+
+	</p:dialog>
+
+
+	<p:confirmDialog message="Estas Seguro?" header="Confirmation"
+		severity="alert" widgetVar="confirmation">
+		<p:commandButton value="Si"
+			action="#{rolesBean.iniciarModificacionRol(rol)}"
+			immediate="true" onclick="PF('confirmation').hide();" />
+		<p:commandButton value="No" onclick="PF('confirmation').hide();"
+			type="button" />
+	</p:confirmDialog>
+
+
+	<div class="contenedor">
+
+
+
+	<h:panelGrid id="tabla">
+		<h:panelGroup style="display:block; text-align:center">
+<h:form>
+			<p:dataTable var="rol" widgetVar="rolTable" emptyMessage="No se han encontrado Tipos de Zona"
+				value="#{rolesBean.listaRol}" styleClass="table"
+				id="tablaRols" scrollHeight="100px"
+				filteredValue="#{rolesBean.listaRolFiltrada}"
+				globalFilterFunction="#{rolesBean.globalFilterFunction}">
+				<p:autoUpdate />
+
+				<f:facet name="header">
+
+
+					<p:outputPanel style="text-align: right; padding: 10px">
+
+						<h:outputText value="Buscar:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('rolTable').filter()"
+							style="width:150px; margin-left: 10px" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column headerText="Nombre" id="nombreColum">
+					<h:panelGroup style="display:block; text-align:center">
+
+						<p:outputLabel value="#{rol.nombre}" />
+					</h:panelGroup>
+
+				</p:column>
+
+			
+
+
+
+				<p:column headerText="Editar">
+					<h:panelGroup style="display:block; text-align:center">
+
+						<p:commandButton
+							action="#{rolesBean.iniciarModificacionRol(rol)}"
+							icon="pi pi-pencil" update="panelModificar"
+							styleClass="botonTabla" immediate="true" value="Editar" />
+					</h:panelGroup>
+
+				</p:column>
+
+				<p:column headerText="Borrar">
+					<h:panelGroup style="display:block; text-align:center">
+
+						<p:commandButton icon="ui-icon ui-icon-trash" immediate="true"
+							action="#{rolesBean.borrarRol(rol)}" value="Borrar"
+							styleClass="botonTabla" update="panelModificar" />
+					</h:panelGroup>
+
+				</p:column>
+			</p:dataTable>
+			</h:form>
+			
+		</h:panelGroup>
+
+	</h:panelGrid>
+	</div>
+	<p:commandButton id="submit-button" value="Crear Rol"
+		styleClass="botonCrear" style="	margin-left:5%; margin-bottom:5%"
+		immediate="true" actionListener="#{rolesBean.borrarValores()}"
+		action="#{rolesBean.botonCrear()}" />
+
+<!-- Pie de página -->
+<span class="pie-pagina p-t-0 p-b-5">
+	<h:graphicImage value="/resources/images/utec.png" width="185dp" height="103dp"/>
+</span> 
+<span class="pie-pagina p-t-0 p-b-5">
+ 	Proyecto Final - Grupo G13 - ITR SO
+</span> 
+
+
+<h:outputScript library="vendor" name="bootstrap/js/popper.js" />
+<h:outputScript library="vendor" name="bootstrap/js/bootstrap.min.js" />
+<h:outputScript library="vendor" name="select2/select2.min.js"/>
+<h:outputScript library="js" name="main.js"/>
+</h:body>
+</html>

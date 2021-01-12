@@ -1,0 +1,230 @@
+@charset "ISO-8859-1";
+
+
+.pie-pagina {
+  font-size: 12px;
+  color: #000;
+  line-height: 1.0;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+#tablePropietarios {
+	align-self: center !important;
+	text-align: center !important;
+	align-content: center !important;
+	align-items: center !important;
+	padding: 10% !important
+}
+
+#tabla {
+	padding: 5%
+}
+.panelColumns td {
+    vertical-align: top; 
+} 
+.ui-diagram-element {   
+        width:12.5em; 
+        height:2em;     
+        line-height:2em;
+        text-align: center;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background-color: rgb(0, 64, 128);
+        color: #ffffff;
+        font-size: 11pt
+    }
+    
+    
+    .indicadoresGrid{
+    margin-bottom:10px;  }
+     
+    .ui-diagram-success {
+        background-color: #9CB071;
+        color: #ffffff;
+        border-color: #7ab02c;
+    }
+     
+    .ui-diagram-fail {
+        background-color: #C34A2C;
+        color: #ffffff;
+    }
+     
+    .flow-label {
+        font-size: 15px;
+        font-weight: bold;
+        color: #816A51;
+    }
+.formulario {
+}
+
+.contenedor {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding: 16px
+}
+
+.botonTabla {
+	text-align: center !important;
+	align-content: center !important;
+	align-items: center !important;
+	align-self: center !important;
+}
+
+.dialogoAlerta {
+	width: 30%
+}
+
+.panelAlerta {
+	height: 500px;
+	width: 500px;
+	display: block
+}
+
+.header {
+	background: #56CCF2; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #2F80ED, #56CCF2);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	width: 100%;
+	height: 60px;
+	display: block;
+	text-align: right !important;
+	/* /* font-family: sans-serif; */ 
+	font-size: 30pt;
+	margin: 0;
+	padding: 0;
+}
+
+.outputText {
+	max-width: 60px;
+}
+
+body, html {
+	width: 100%;
+	height:100%
+	;	margin: 0;
+	padding: 0;
+	background-color: #ffffff;
+	/* font-family: sans-serif; */
+}
+
+.mapid {
+	height: 600px;
+	width: 1000px;
+	display: block
+}
+
+.panelDialogo {
+	display: block;
+	text-align: center
+}
+
+.ui-dialog {
+	position: absolute !important;
+}
+
+.titulo {
+	/* font-family: sans-serif; */
+	font-size: 30pt;
+	text-align: center;
+	margin-bottom: 30dp;
+	vertical-align: center;
+}
+
+.menubar {
+	vertical-align: top !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border-radius: 0 !important;
+	
+}
+
+.menuItem, .ui-menuitem{
+}
+
+
+.menuItem:hover {
+}
+
+#crearPropietarioForm {
+	text-align: center;
+	border-bottom-left-radius: 10pt;
+	border-bottom-right-radius: 10pt;
+	border-top-left-radius: 10pt;
+	border-top-right-radius: 10pt;
+	display: block;
+}
+
+.table {
+	text-align: center;
+	align-content: center;
+	align-items: center;
+	align-self: center;
+}
+
+.textoFormulario {
+}
+
+.contenefor {
+	display: flex;
+}
+
+#panelFormulario {
+	display: block;
+}
+
+select, textarea, h1, inputText {
+	color: black;
+	/* font-family: sans-serif; */
+	font-size: 30pt;
+}
+
+dropdownmenu {
+	width: 200pt !important;
+}
+
+input {
+	width: 200pt;
+	border: solid 1px #0080ff;
+	border-color: #0080ff;
+	border-bottom-left-radius: 10pt;
+	border-bottom-right-radius: 10pt;
+	border-top-left-radius: 10pt;
+	border-top-right-radius: 10pt;
+	/* font-family: sans-serif; */
+	font-size: 20pt;
+}
+
+textarea:focus, input:focus {
+	color: black;
+	/* font-family: sans-serif; */
+}
+
+.botonColor {
+	border: none;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+}
+
+.botonCrear {
+	width: 200pt;
+	border: none;
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	background: #0080ff;
+	color: #ffffff;
+	/* font-family: sans-serif; */
+	font-size: 20pt;
+}
+
+
+
+

@@ -1,0 +1,606 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<!-- 
+	
+	
+	"     &quot;
+&     &amp;
+'     &apos;
+<     &lt;
+>     &gt;
+
+-->
+<h:head>
+
+	<title>Predios - G13</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<link rel="stylesheet" type="text/css"
+		href="/PFWEB/resources/vendor/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/PFWEB/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/PFWEB/resources/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/PFWEB/resources/vendor/animate/animate.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/PFWEB/resources/vendor/css-hamburgers/hamburgers.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/PFWEB/resources/vendor/select2/select2.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/PFWEB/resources/css/util.css" />
+		
+		<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+		
+	<!--  <link rel="stylesheet" type="text/css" href="/PFWEB/resources/css/main.css"/> -->
+
+
+	<h:outputStylesheet library="css" name="TablasFormulariosStyle.css" />
+	<link rel="stylesheet"
+		href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+		crossorigin="" />
+	<!-- Make sure you put this AFTER Leaflet's CSS -->
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+		crossorigin=""></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css" />
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+
+	<link rel="stylesheet"
+		href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" />
+	<script
+		src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+</h:head>
+
+<f:metadata>
+	<f:viewAction action="#{prediosBean.obtenerListaPredios()}" />
+	<f:viewAction action="#{prediosBean.obtenerListaDualPropietarios()}" />
+	<f:viewAction action="#{indicadoresBean.obtenerListaIndicadores()}" />
+	<f:viewAction action="#{tipozonaBean.obtenerListaTipoZonas()}" />
+
+</f:metadata>
+<h:body>
+	<ui:include src="/pages/menu_header.xhtml"></ui:include>
+											<h:panelGroup style="display:block; text-align:center">
+
+	<h2>Predios</h2>
+											</h:panelGroup>
+
+	<p:dialog header="Alerta" widgetVar="messegeDiolog" id="messegeDiolog"
+		minHeight="40" styleClass="dialogoAlerta">
+						<h:panelGrid columns="1" cellspacing="5">
+						
+			<h:outputLabel value="#{prediosBean.messege}" id="errorMessege"
+				></h:outputLabel>
+											<h:panelGroup style="display:block; text-align:center">
+
+			<p:commandButton id="aceptar-button" value="Aceptar" action="#{propietariosBean.ocultarMensaje()}" />
+		</h:panelGroup></h:panelGrid>
+		
+		
+	</p:dialog>
+	<p:dialog widgetVar="crear" position="top" modal="true"
+		header="Crear Predio">
+		<h:panelGroup style="display:block; text-align:center">
+			<h:panelGrid columns="3" id="panelCrear" cellspacing="5"
+				cellpadding="5">
+				<h:panelGroup id="mapaCrear" class="mapid"></h:panelGroup>
+				<script type="text/javascript" src="../../resources/js/map.js"></script>
+				<h:form id="crearPredioForm">
+					<h:panelGrid columns="1" id="panelFormulario" cellspacing="5"
+						styleClass="formulario">
+						<h:outputLabel value="Nombre"></h:outputLabel>
+						<p:inputText id="nombre" value="#{prediosBean.nombre}"
+							requiredMessage="Debe ingresar un Nombre" pt:placeholder="Nombre" />
+						<h:outputLabel value="Descripcion"></h:outputLabel>
+						<p:inputText id="descripcion" value="#{prediosBean.descripcion}"
+							requiredMessage="Debe Ingresar una Descripcion"
+							pt:placeholder="Descripcion" />
+						<h:outputLabel></h:outputLabel>
+						<h:panelGroup style="display:block; text-align:center">
+							<h:outputLabel value="Propietarios"></h:outputLabel>
+						</h:panelGroup>
+						<p:pickList value="#{prediosBean.listaPropietarios}"
+							styleClass="pick" converter="#{converter}" var="propietario"
+							itemLabel="#{propietario.nombre}" itemValue="#{propietario}">
+
+							<f:facet name="header">Propietarios</f:facet>
+
+						</p:pickList>
+						<h:panelGroup style="display:block; text-align:center">
+							<p:commandButton id="submit-button" value="Crear Predio"
+								oncomplete="" styleClass="botonCrear"
+								action="#{prediosBean.crearPredio()}" update="errorMessege" />
+						</h:panelGroup>
+						<h:outputLabel>
+						</h:outputLabel>
+						<h:panelGroup>
+						</h:panelGroup>
+						<h:message for="crearPredioForm" showSummary="true" />
+
+					</h:panelGrid>
+					<p:inputText id="formaInput" type="hidden" widgetVar="formaInput"
+						value="#{prediosBean.formaJson}">
+
+					</p:inputText>
+					<p:inputText id="formaPotrerosInput" type="hidden"
+						widgetVar="formaPotrerosInput" value="#{prediosBean.potrerosJson}" />
+
+					<p:inputText id="formaZonasInput" type="hidden"
+						widgetVar="formaZonasInput" value="#{prediosBean.zonasJson}" />
+				</h:form>
+			</h:panelGrid>
+		</h:panelGroup>
+
+	</p:dialog>
+
+	<p:dialog widgetVar="panelModificar" id="panelModificar" modal="false"
+		position="top" header="Modificar Predio">
+		<h:panelGrid columns="3" id="panelModificarDeFormulario"
+			cellspacing="5" cellpadding="5">
+			<h:panelGroup id="mapaModificar" class="mapid"></h:panelGroup>
+			<script type="text/javascript" src="../../resources/js/map.js"></script>
+			<h:form id="modificarPredio" styleClass="formulario">
+				<p:autoUpdate />
+				<h:panelGroup style="display:block; text-align:center">
+
+					<h:panelGrid columns="1" id="panelFormulario" cellspacing="5"
+						styleClass="formulario" cellpadding="5">
+
+						<p:outputLabel value="Nombre" />
+						<p:inputText id="nombre" value="#{prediosBean.nombre}"
+							requiredMessage="Debe ingresar un Nombre" pt:placeholder="Nombre" />
+						<p:outputLabel value="Descripcion" />
+
+						<p:inputText id="descripcion" value="#{prediosBean.descripcion}"
+							requiredMessage="Debe Ingresar una Descripcion"
+							pt:placeholder="Descripcion" />
+
+						<h:outputLabel></h:outputLabel>
+						<p:pickList value="#{prediosBean.listaPropietarios}"
+							styleClass="pick" converter="#{converter}" var="propietario"
+							itemLabel="#{propietario.nombre}" itemValue="#{propietario}">
+							<f:facet name="header">Propietarios</f:facet>
+
+
+
+						</p:pickList>
+						<p:commandButton id="submit-button" value="Modificar Predio"
+							update="messegeDiolog" oncomplete="" styleClass="botonCrear"
+							action="#{prediosBean.modificarPredio()}" />
+						<h:outputLabel></h:outputLabel>
+						<h:outputLabel value="#{prediosBean.messege}"></h:outputLabel>
+
+
+
+					</h:panelGrid>
+				</h:panelGroup>
+				<p:inputText id="formaInput" type="hidden" widgetVar="formaInput"
+					value="#{prediosBean.formaJson}">
+
+				</p:inputText>
+				<p:inputText id="formaPotrerosInput" type="hidden"
+					widgetVar="formaPotrerosInput" value="#{prediosBean.potrerosJson}">
+
+				</p:inputText>
+
+				<p:inputText id="formaZonasInput" type="hidden"
+					widgetVar="formaZonasInput" value="#{prediosBean.zonasJson}" />
+			</h:form>
+		</h:panelGrid>
+	</p:dialog>
+
+
+
+	<p:dialog widgetVar="panelModificarPotreros"
+		id="panelModificarPotreros" modal="true" position="top"
+		responsive="true" header="Modificar Potrero" dynamic="false">
+		<h:panelGrid columns="3" id="modificarPotreros" cellspacing="5"
+			cellpadding="5">
+			<h:panelGroup id="mapaModificarPotreros" class="mapid"></h:panelGroup>
+			<script type="text/javascript" src="../../resources/js/map.js"></script>
+
+			<h:form id="modificarPotrerosForm" styleClass="formulario">
+				<p:autoUpdate />
+				<h:panelGroup style="display:block; text-align:center">
+
+					<h:panelGrid columns="1" id="panelFormulario" cellspacing="5"
+						styleClass="formulario" cellpadding="1">
+
+						<p:dataTable var="potrero" widgetVar="potreroTable"
+							scrollHeight="400" scrollable="true"
+							value="#{prediosBean.potreros}" rowIndexVar="rowIndex"
+							emptyMessage="No se han encontrado Potreros"
+							styleClass="tablePredios" id="tablaPotreros">
+
+
+							<f:facet name="header">Potreros</f:facet>
+
+							<p:column headerText="Nombre">
+								<h:panelGroup style="display:block; text-align:center">
+
+									<p:outputLabel value="#{potrero.nombre}" />
+								</h:panelGroup>
+							</p:column>
+							<p:column headerText="Area">
+								<h:panelGroup style="display:block; text-align:center">
+									<p:outputLabel value="#{potreroBean.redondearArea(potrero)} ha" />
+								</h:panelGroup>
+							</p:column>
+							<p:column headerText="Indicador" style="width:110px" >
+								<h:panelGroup style="display:block; text-align:center;">
+									<p:selectOneMenu value="#{potrero.indicadorActual}" style="width:95px; 	font-size: 8pt;
+									"   onchange="#{prediosBean.cambiar()}"
+										converter="#{indicadoresBean}">
+										<f:selectItems value="#{indicadoresBean.indicadoresTodos}" style="width:80px; font-size: 10pt"
+											var="indicador" itemLabel="#{indicador.nombre}"
+											itemValue="#{indicador}" />
+									</p:selectOneMenu>
+								</h:panelGroup>
+							</p:column>
+							<p:column headerText="Ver Historico">
+								<h:panelGroup style="display:block; text-align:center">
+									<p:commandButton  immediate="true"  style="width:80px; font-size: 10pt"
+										actionListener="#{potreroBean.verHistorico(potrero)}"
+										value="Historico" update="panelModificar"
+										styleClass="botonTabla" />
+								</h:panelGroup>
+							</p:column>
+
+							<p:column headerText="Borrar" style="width:60px;" >
+								<h:panelGroup style="display:block; text-align:center">
+									<p:commandButton icon="ui-icon ui-icon-trash" immediate="true"
+										actionListener="#{prediosBean.borrarPotrero(potrero)}"
+										update="panelModificar" styleClass="botonTabla" />
+								</h:panelGroup>
+							</p:column>
+
+
+						</p:dataTable>
+						<h:outputLabel></h:outputLabel>
+					</h:panelGrid>
+				</h:panelGroup>
+				<p:inputText id="formaInput" type="hidden" widgetVar="formaInput"
+					value="#{prediosBean.formaJson}">
+
+				</p:inputText>
+				<p:inputText id="formaPotrerosInput" type="hidden"
+					widgetVar="formaPotrerosInput" value="#{prediosBean.potrerosJson}">
+
+				</p:inputText>
+
+				<p:inputText id="formaZonasInput" type="hidden"
+					widgetVar="formaZonasInput" value="#{prediosBean.zonasJson}" />
+				<p:remoteCommand name="agregarPotrero" immediate="true"
+					actionListener="#{prediosBean.crearPotreroPreeliminar}" />
+				<p:remoteCommand name="modificarPotrero" immediate="true"
+					actionListener="#{prediosBean.modificarPotreroPreeliminarmente}" />
+				
+
+				<p:dataTable value="#{potreroBean.selectedPotrero.indicadorPotreros}"
+					var="indicadorPotrero" scrollHeight="200" scrollable="true" emptyMessage="No hay registros o todavia no haz seleccionado un potrero">
+					<f:facet name="header">Historico Del Potrero</f:facet>
+
+					<p:column headerText="Indicador">
+						<p:outputLabel value="#{indicadorPotrero.indicador}"></p:outputLabel>
+
+					</p:column>
+					<p:column headerText="Fecha de inicio">
+						<p:outputLabel value="#{indicadoresBean.formatearFecha(indicadorPotrero.desde)}"></p:outputLabel>
+
+					</p:column>
+					<p:column headerText="Fecha Final">
+						<p:outputLabel value="#{indicadoresBean.formatearFecha(indicadorPotrero.hasta)}"></p:outputLabel>
+
+					</p:column>
+				</p:dataTable>
+<p:commandButton id="submit-button" value="Modificar Potreros"
+					update="messegeDiolog" styleClass="botonCrear"
+					action="#{prediosBean.modificarPotreros()}" />
+			</h:form>
+		</h:panelGrid>
+	</p:dialog>
+
+	<p:dialog widgetVar="panelModificarZonas" id="panelModificarZonas"
+		modal="false" position="top" header="Modificar Zonas">
+		<h:panelGrid columns="3" id="modificarZonas" cellspacing="5"
+			cellpadding="5">
+			<h:panelGroup id="mapaModificarZonas" class="mapid"></h:panelGroup>
+			<script type="text/javascript" src="../../resources/js/map.js"></script>
+			<h:form id="modificarZonasForm" styleClass="formulario">
+				<p:autoUpdate />
+				<h:panelGroup style="display:block; text-align:center">
+					<h:panelGrid columns="1" id="panelFormulario" cellspacing="5"
+						styleClass="formulario" cellpadding="5">
+						<p:dataTable var="zona" widgetVar="potreroTable"
+							scrollHeight="400" value="#{prediosBean.zonas}"
+							emptyMessage="No se han encontrado Zonas"
+							styleClass="tablePredios" id="tablaPotreros" scrollable="true">
+
+							<f:facet name="header">Zonas Geograficas</f:facet>
+
+							<p:column>
+								<h:panelGroup style="display:block; text-align:center">
+									<p:outputLabel value="#{zona.nombre}" />
+								</h:panelGroup>
+							</p:column>
+							<p:column headerText="Area">
+								<h:panelGroup style="display:block; text-align:center">
+
+									<p:outputLabel value="#{zonaGeografica.redondearArea(zona)} ha" />
+
+								</h:panelGroup>
+
+							</p:column>
+							<p:column>
+								<h:panelGroup style="display:block; text-align:center">
+									<p:selectOneMenu value="#{zona.tipoZona}"
+										converter="#{tipozonaBean}">
+
+										<f:selectItems value="#{tipozonaBean.listaTipoZona}"
+											var="tipoZona" itemLabel="#{tipoZona.nombre}"
+											itemValue="#{tipoZona}" />
+
+									</p:selectOneMenu>
+								</h:panelGroup>
+							</p:column>
+							<p:column headerText="Borrar">
+								<h:panelGroup style="display:block; text-align:center">
+
+									<p:commandButton icon="ui-icon ui-icon-trash"
+										action="#{prediosBean.borrarZona(zona)}" value="Borrar"
+										update="panelModificar" styleClass="botonTabla" />
+								</h:panelGroup>
+							</p:column>
+						</p:dataTable>
+
+						<p:commandButton  value="Modificar Zonas"
+							update="messegeDiolog"  styleClass="botonCrear"
+							action="#{prediosBean.modificarZona()}" />
+						<h:outputLabel></h:outputLabel>
+						<h:outputLabel value="#{prediosBean.messege}"></h:outputLabel>
+					</h:panelGrid>
+				</h:panelGroup>
+				<p:inputText id="formaInput" type="hidden" widgetVar="formaInput"
+					value="#{prediosBean.formaJson}">
+				</p:inputText>
+				<p:inputText id="formaPotrerosInput" type="hidden"
+					widgetVar="formaPotrerosInput" value="#{prediosBean.potrerosJson}">
+				</p:inputText>
+				<p:remoteCommand name="agregarZona" immediate="true"
+					actionListener="#{prediosBean.crearZonaPreeliminar}" />
+				<p:remoteCommand name="modificarZona" immediate="true"
+					actionListener="#{prediosBean.modificarZonaPreeliminarmente}" />
+				<p:inputText id="formaZonasInput" type="hidden"
+					widgetVar="formaZonasInput" value="#{prediosBean.zonasJson}" />
+			</h:form>
+		</h:panelGrid>
+	</p:dialog>
+
+
+
+
+
+
+	<p:dialog widgetVar="detalles" id="panelDetalles" modal="true"
+		position="top" styleClass="panelAlerta" header="Detalles Predio">
+
+		<h:panelGroup style="display:block; text-align:center"
+			styleClass="formulario">
+			<h:panelGrid columns="3" id="panelFormulario" cellspacing="5"
+				cellpadding="5">
+				<h:panelGroup id="mapid" class="mapid"></h:panelGroup>
+
+				<script type="text/javascript" src="../../resources/js/map.js"></script>
+				<h:panelGroup style="display:block; text-align:center"
+					styleClass="formulario">
+
+
+					<h:form styleClass="formulario">
+						<p:autoUpdate />
+
+
+						<h:panelGroup style="display:block; text-align:center"
+							styleClass="formulario">
+
+							<h:panelGrid columns="1" id="panelFormulario" cellspacing="5"
+								cellpadding="5">
+
+
+								<p:outputLabel value="Nombre: #{prediosBean.nombre}"
+									styleClass="textoFormulario" />
+
+								<p:outputLabel value="Descripcion: #{prediosBean.descripcion}"
+									styleClass="textoFormulario" />
+								<p:outputLabel value="Area: #{prediosBean.areaEnHectareas} ha"
+									styleClass="textoFormulario" />
+
+								<p:dataList value="#{prediosBean.propietarios}"
+									emptyMessage="Sin propietarios" var="propietario"
+									>
+
+									<f:facet name="header">Propietarios</f:facet>
+									        Nombre:  #{propietario.nombre} - Rut: #{propietario.rut}
+									 </p:dataList>
+
+
+								<h:outputLabel></h:outputLabel>
+
+							</h:panelGrid>
+						</h:panelGroup>
+						<p:inputText id="formaInput" type="hidden" widgetVar="formaInput"
+							value="#{prediosBean.formaJson}">
+
+						</p:inputText>
+						<p:inputText id="formaPotrerosInput" type="hidden"
+							widgetVar="formaPotrerosInput"
+							value="#{prediosBean.potrerosJson}" />
+						<p:inputText id="formaZonasInput" type="hidden"
+							widgetVar="formaZonasInput" value="#{prediosBean.zonasJson}" />
+
+					</h:form>
+
+				</h:panelGroup>
+			</h:panelGrid>
+
+		</h:panelGroup>
+
+	</p:dialog>
+
+
+
+
+
+	<p:dialog widgetVar="historico" id="historico" modal="true"
+		position="top" styleClass="panelAlerta" header="Historico Predio">
+
+		<h:panelGroup style="display:block; text-align:center"
+			styleClass="formulario">
+
+
+
+
+			<br />
+			<p:chart type="line" model="#{indicadoresBean.model}"
+				style="height:600px;width:1200px" responsive="true"  />
+
+
+		</h:panelGroup>
+
+	</p:dialog>
+
+
+
+
+
+
+
+
+
+
+
+	<p:confirmDialog message="Estas Seguro?" header="Confirmation"
+		severity="alert" widgetVar="confirmation">
+		<p:commandButton value="Si"
+			action="#{prediosBean.iniciarModificacionPredio(predio)}"
+			immediate="true" onclick="PF('confirmation').hide();" />
+		<p:commandButton value="No" onclick="PF('confirmation').hide();"
+			type="button" />
+	</p:confirmDialog>
+	<div class="contenedor">
+		<h:panelGrid id="tabla" columns="2">
+			<h:panelGroup>
+				<h:form title="Predios">
+					<p:dataTable var="predio" widgetVar="predioTable"
+						value="#{prediosBean.listaPredios}"
+						emptyMessage="No se han encontrado Predios"
+						styleClass="tablePredios" id="tablaPredios"
+						filteredValue="#{prediosBean.listaPrediosFiltrada}"
+						scrollHeight="400" scrollable="true"
+						globalFilterFunction="#{prediosBean.globalFilterFunction}">
+						<p:autoUpdate />
+						<f:facet name="header">
+							<p:outputPanel style="text-align: right; padding: 10px">
+								<h:outputText value="Buscar:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('predioTable').filter()"
+									style="width:150px; margin-left: 10px" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="Nombre" id="nombreColum">
+							<h:panelGroup style="display:block; text-align:center">
+								<p:outputLabel value="#{predio.nombre}" />
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="Ver Detalles">
+							<h:panelGroup style="display:block; text-align:center">
+								<p:commandButton icon="pi pi-check"
+									action="#{prediosBean.verDetalles(predio)}" immediate="true"
+									value="Detalles" update="panelDetalles" />
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="Editar">
+							<h:panelGroup style="display:block; text-align:center">
+
+								<p:commandButton
+									action="#{prediosBean.iniciarModificacionPredio(predio)}" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}"
+									 update="panelModificar"
+									immediate="true" value="Editar" styleClass="botonTabla"  icon="pi pi-pencil" />
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="Editar Potreros">
+							<h:panelGroup style="display:block; text-align:center">
+								<p:commandButton
+									action="#{prediosBean.iniciarModificacionPotreros(predio)}" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('master')}"
+									 update="panelModificar"
+									immediate="true" value="Editar" styleClass="botonTabla"   icon="pi pi-pencil"/>
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="Editar Zonas Geograficas">
+							<h:panelGroup style="display:block; text-align:center">
+
+								<p:commandButton
+									action="#{prediosBean.iniciarModificacionZonas(predio)}" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('master')}"
+									 update="panelModificar"
+									immediate="true" value="Editar" styleClass="botonTabla"  icon="pi pi-pencil" />
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="Historico">
+							<h:panelGroup style="display:block; text-align:center">
+
+								<p:commandButton  immediate="true"
+									action="#{indicadoresBean.obtenerIndicadoresPredio(predio)}"
+									value="Ver Historico" update="historico"  icon="pi pi-chart-line"
+									styleClass="botonTabla" />
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="Activar/Desactivar">
+							<h:panelGroup style="display:block; text-align:center">
+
+								<p:commandButton icon="ui-icon ui-icon-trash" immediate="true" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}"
+									action="#{prediosBean.borrarPredio(predio)}"
+									value="#{predio.activo?'Desactivar' : 'Activar'}"
+									update="tabla" styleClass="botonTabla" />
+							</h:panelGroup>
+						</p:column>
+
+
+					</p:dataTable>
+				</h:form>
+			</h:panelGroup>
+		</h:panelGrid>
+	</div>
+
+
+	<p:commandButton id="submit-button" value="Crear Predio"
+		styleClass="botonCrear" style="	margin-left:5%; margin-bottom:5%" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}"
+		immediate="true" actionListener="#{prediosBean.borrarValores()}"
+		action="#{prediosBean.botonCrear()}" />
+
+
+	<!-- Pie de página -->
+	<span class="pie-pagina p-t-0 p-b-5"> <h:graphicImage
+			value="/resources/images/utec.png" width="185dp" height="103dp" />
+	</span>
+	<span class="pie-pagina p-t-0 p-b-5"> Proyecto Final - Grupo G13
+		- ITR SO </span>
+
+
+	<h:outputScript library="vendor" name="bootstrap/js/popper.js" />
+	<h:outputScript library="vendor" name="bootstrap/js/bootstrap.min.js" />
+	<h:outputScript library="vendor" name="select2/select2.min.js" />
+	<h:outputScript library="js" name="main.js" />
+
+
+</h:body>
+</html>

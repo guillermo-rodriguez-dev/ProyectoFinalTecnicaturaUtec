@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+      
+      
+      
+      
+	<h:panelGroup id="header" styleClass="header">
+		<h:graphicImage width="50dp" height="50dp" value="/resources/images/logo.png" />
+	</h:panelGroup>
+	<h:panelGroup style="display:block; text-align:center">
+		<h:form>
+			<p:menubar styleClass="menubar">
+				<p:menuitem  value="Usuarios" url="../usuario/listaUsuariosPage.jsf" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}" styleClass="menuItem"/>
+				<p:menuitem value="Propietarios" url="../propietario/listaPropietariosPage.jsf" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}" styleClass="menuItem"/>
+				<p:menuitem value="Predios" url="../predio/listaPrediosPage.jsf"  styleClass="menuItem"/>
+				<p:menuitem value="Tipos de Zona" url="../tipozona/listaTipoZonaPage.jsf" styleClass="menuItem"/>
+				<p:menuitem value="Indicadores" url="../indicadores/listaIndicadoresPage.jsf" styleClass="menuItem" />
+				<p:menuitem value="Roles" url="../rol/listaRolesPage.jsf" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}" />
+				<p:menuitem value="Salir" url="../loginPage.jsf" styleClass="menuItem" />
+			</p:menubar>
+		</h:form>
+	</h:panelGroup>
+	</html>

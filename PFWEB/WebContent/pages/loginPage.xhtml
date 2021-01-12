@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:l="http://xmlns.jcp.org/jsf/passthrough"
+
+ 
+ xmlns:p="http://primefaces.org/ui">
+<title>Potreros de Nueva Helvecia - G13</title>	
+<h:head>
+   	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ 	<link rel="icon" type="image/png" href="/PFWEB/resources/images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="/PFWEB/resources/vendor/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/PFWEB/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/PFWEB/resources/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/PFWEB/resources/vendor/animate/animate.css"/>
+	<link rel="stylesheet" type="text/css" href="/PFWEB/resources/vendor/css-hamburgers/hamburgers.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/PFWEB/resources/vendor/select2/select2.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/PFWEB/resources/css/util.css"/>
+	<link rel="stylesheet" type="text/css" href="/PFWEB/resources/css/main.css"/>
+	
+	
+	
+<f:metadata>
+		<f:viewAction action="#{usuarioBean.borrarValores()}" />
+	
+</f:metadata>
+</h:head>
+<h:body>
+
+<div class="limiter">
+		<div class="container-login100" style="background-image: url('/PFWEB/resources/images/homepage-bgr.png');">
+			<div class="wrap-login100 p-t-0 p-b-30">
+				<h:form class="login100-form validate-form">
+					<div class="login100-form-avatar">
+						<h:graphicImage value="/resources/images/logo.png"  width="150dp" height="120dp"/>
+					</div>
+
+					<span class="login100-form-title p-t-20 p-b-45">
+						Login
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-10" data-validate = "Debes Ingresar Un Usuario">
+						<h:inputText id="usuario" name="username" value="#{usuarioBean.username}"  class="input100" type="text" l:placeholder="Usuario"></h:inputText>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-10"  data-validate = "Debes Ingresar Un Password">
+						<h:inputSecret id="password" name="password"  value="#{usuarioBean.password}" class="input100" type="password" l:placeholder="Password"></h:inputSecret>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock"></i>
+						</span>
+					</div>
+
+					<div class="container-login100-form-btn p-t-10">
+					<h:commandButton value="Ingresar" styleClass="botonLogin" action="#{usuarioBean.obtenerUsuario()}" class="login100-form-btn">
+					</h:commandButton>
+					<h:outputText value="#{usuarioBean.message}" styleClass="errorMensaje"  />
+					</div>
+				</h:form>
+				
+					<span class="login100-form-pie p-t-40 p-b-5">
+					<h:graphicImage value="/resources/images/utec.png" width="185dp" height="103dp"/>
+					</span> 
+					<span class="login100-form-pie p-t-10 p-b-5">
+					 Proyecto Final - Grupo G13 - ITR SO
+					</span> 
+					
+			</div>
+		</div>
+		
+	</div>
+
+<h:outputScript library="vendor" name="jquery/jquery-3.2.1.min.js" />
+<h:outputScript library="vendor" name="bootstrap/js/popper.js" />
+<h:outputScript library="vendor" name="bootstrap/js/bootstrap.min.js" />
+<h:outputScript library="vendor" name="select2/select2.min.js"/>
+<h:outputScript library="js" name="main.js"/>
+
+</h:body>
+ 
+
+</html>

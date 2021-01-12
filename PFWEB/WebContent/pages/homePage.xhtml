@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>Gestión - G13</title>
+<ui:include src="/pages/_header.xhtml"></ui:include>
+</h:head>
+<h:body>
+	      
+	<h:panelGroup id="header" styleClass="header">
+		<h:graphicImage width="50dp" height="50dp" value="/resources/images/logo.png" />
+	</h:panelGroup>
+		<h:panelGroup style="display:block; text-align:center">
+		<h:form>
+			<p:menubar styleClass="menubar">
+				<p:menuitem  value="Usuarios" url="../pages/usuario/listaUsuariosPage.jsf" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}" styleClass="menuItem"/>
+				<p:menuitem value="Propietarios" url="../pages/propietario/listaPropietariosPage.jsf" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}" styleClass="menuItem"/>
+				<p:menuitem value="Predios" url="../pages/predio/listaPrediosPage.jsf"  styleClass="menuItem"/>
+				<p:menuitem value="Tipos de Zona" url="../pages/tipozona/listaTipoZonaPage.jsf"  styleClass="menuItem"/>
+				<p:menuitem value="Indicadores" url="../pages/indicadores/listaIndicadoresPage.jsf" styleClass="menuItem" />
+				<p:menuitem value="Roles" url="../pages/rol/listaRolesPage.jsf" disabled="#{!usuarioBean.usuarioLogueado.tieneRol('admin')}"/>
+				<p:menuitem value="Salir" url="../pages/loginPage.jsf" styleClass="menuItem" />
+			</p:menubar>
+		</h:form>
+	</h:panelGroup>
+							<h:panelGroup style="display:block; text-align:center">
+	
+<h2>Inicio</h2>
+</h:panelGroup>
+						<h:panelGroup style="display:block; text-align:center">
+						
+						
+
+						
+						
+	<h:graphicImage value="/resources/images/vaca.jpg" height="60%" />
+	
+	
+						</h:panelGroup>
+
+<!-- Pie de página -->
+
+
+
+<span class="pie-pagina p-t-0 p-b-5">
+	<h:graphicImage value="/resources/images/utec.png" width="185dp" height="103dp"/>
+</span> 
+<span class="pie-pagina p-t-0 p-b-5">
+ 	Proyecto Final - Grupo G13 - ITR SO
+</span> 
+
+<!-- <h:outputScript library="vendor" name="jquery/jquery-3.2.1.min.js" /> -->
+<h:outputScript library="vendor" name="bootstrap/js/popper.js" />
+<h:outputScript library="vendor" name="bootstrap/js/bootstrap.min.js" />
+<h:outputScript library="vendor" name="select2/select2.min.js"/>
+<h:outputScript library="js" name="main.js"/>
+
+</h:body>
+</html>

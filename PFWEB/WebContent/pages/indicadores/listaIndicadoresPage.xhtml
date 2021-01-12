@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Indicadores - G13</title>
+	<ui:include src="/pages/_header.xhtml"></ui:include>
+</h:head>
+
+
+<f:metadata>
+	<f:viewAction action="#{prediosBean.obtenerListaPredios()}" />
+	<f:viewAction action="#{prediosBean.obtenerListaDualPropietarios()}" />
+	<f:viewAction action="#{indicadoresBean.obtenerListaIndicadores()}" />
+	<f:viewAction action="#{tipozonaBean.obtenerListaTipoZonas()}" />
+	<f:viewAction
+		action="#{indicadoresBean.obtenerIndicadoresPredioParaDiagrama()}" />
+
+</f:metadata>
+
+
+<h:body>
+	<ui:include src="/pages/menu_header.xhtml"></ui:include>
+
+
+	<h:panelGroup style="display:block; text-align:center">
+
+		<h2>Indicadores</h2>
+
+	</h:panelGroup>
+
+	<h:form style="width:100%">
+
+
+
+
+
+
+
+
+
+
+
+
+		<h:panelGrid columns="2" styleClass="panelColumns"
+			style="width:100%; display:block" cellpadding="5">
+
+			<h:panelGroup>
+				<h:outputText value="Selecciona un Predio" />
+				<p:selectOneListbox immediate="true"
+					value="#{indicadoresBean.predioElegido}" converter="#{prediosBean}">
+					<f:selectItems value="#{prediosBean.listaPredios}" var="predio"
+						itemLabel="#{predio.nombre}"></f:selectItems>
+				</p:selectOneListbox>
+				<p:commandButton value="Ver Datos"
+					action="#{indicadoresBean.cargarIndicadoresPredioActuales()}">
+
+
+
+				</p:commandButton>
+			</h:panelGroup>
+
+
+
+
+
+
+
+
+			<p:diagram widgetVar="diagram" id="diagram"
+				value="#{indicadoresBean.diagramModel}"
+				styleClass="ui-widget-content" style="height: 400px;width:1300px">
+
+
+
+				<p:autoUpdate></p:autoUpdate>
+
+			</p:diagram>
+
+
+
+
+
+
+
+		</h:panelGrid>
+
+
+
+
+	</h:form>
+
+
+	<!-- Pie de página -->
+	<span class="pie-pagina p-t-0 p-b-5"> <h:graphicImage
+			value="/resources/images/utec.png" width="185dp" height="103dp" />
+	</span>
+	<span class="pie-pagina p-t-0 p-b-5"> Proyecto Final - Grupo G13
+		- ITR SO </span>
+
+
+	<h:outputScript library="vendor" name="bootstrap/js/popper.js" />
+	<h:outputScript library="vendor" name="bootstrap/js/bootstrap.min.js" />
+	<h:outputScript library="vendor" name="select2/select2.min.js" />
+	<h:outputScript library="js" name="main.js" />
+
+
+
+
+
+
+</h:body>
+
+</html>

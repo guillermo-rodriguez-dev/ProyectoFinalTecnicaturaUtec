@@ -1,0 +1,385 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head>
+<title>Usuarios - G13</title>
+<ui:include src="/pages/_header.xhtml"></ui:include>
+</h:head>
+
+<f:metadata>
+	<f:viewAction  action="#{usuarioBean.iniciarPantallaUsuario()}" />
+		<f:viewAction action="#{usuarioBean.comprobarUsuario()}" />
+	
+</f:metadata>
+<h:body>
+
+<ui:include src="/pages/menu_header.xhtml"></ui:include>
+
+
+
+											<h:panelGroup style="display:block; text-align:center">
+
+<h2>Usuarios</h2>
+
+											</h:panelGroup>
+
+	<p:dialog header="Alerta" widgetVar="messegeDiolog" id="messegeDiolog" styleClass="dialogoAlerta"
+		minHeight="40">
+		<h:panelGrid columns="1" id="panelMensaje" cellspacing="2"
+			styleClass="formulario">						
+			
+			<h:outputLabel value="#{usuarioBean.message}" id="errorMessege"
+				></h:outputLabel>
+											<h:panelGroup style="display:block; text-align:center">
+
+			<p:commandButton id="aceptar-button" value="Aceptar" action="#{usuarioBean.ocultarMensaje()}" /></h:panelGroup>
+		</h:panelGrid>
+
+	</p:dialog>
+
+	<p:dialog widgetVar="crear" modal="true" header="Crear Usuario">
+		<h:panelGroup style="display:block; text-align:center">
+
+			<h:form id="crearUsuarioForm">
+				<h:panelGrid columns="2" id="panelFormulario" cellspacing="5"
+					styleClass="formulario">
+
+					<p:outputLabel value="Nombres" />
+
+					<p:inputText id="nombre" value="#{usuarioBean.nombres}"
+						requiredMessage="Debe ingresar un Nombre" pt:placeholder="Nombre" />
+						
+						
+						
+					<p:outputLabel value="Apellidos" />
+
+					<p:inputText id="apellidos" value="#{usuarioBean.apellidos}"
+						requiredMessage="Debe Ingresar un Apellido"
+						pt:placeholder="Apellido" />
+					<p:outputLabel value="Direccion" />
+
+					<p:inputText id="direccion" value="#{usuarioBean.direccion}"
+						requiredMessage="Debe Ingresar una Direccion"
+						pt:placeholder="Direccion" />
+					<p:outputLabel value="Correo" />
+
+					<p:inputText id="correo" value="#{usuarioBean.correo}"
+						requiredMessage="Debe Ingresar un Correo Electronico"
+						pt:placeholder="Correo Electronico" />
+					<p:outputLabel value="Tipo de documento" />
+
+
+					<p:selectOneMenu id="tipoDocumento"
+						style="	width: 200pt !important;"
+						value="#{usuarioBean.tipoDocumento}">
+
+
+						<f:selectItems value="#{enumeradosBean.tipoDocumento}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="Documento" />
+
+
+					<p:inputText id="documento" value="#{usuarioBean.documento}"
+						requiredMessage="Debe Ingresar un Documento"
+						pt:placeholder="Documento" />
+					<p:outputLabel value="Username" />
+
+					<p:inputText id="username" value="#{usuarioBean.username}"
+						pt:placeholder="Username"
+						requiredMessage="Debe Ingresar un Username" />
+
+					<p:outputLabel value="Contraseña" />
+
+					<p:password id="password" type="" value="#{usuarioBean.password}"
+						pt:placeholder="Password"
+						converterMessage="Debe Ingresar Solo Numeros"
+						requiredMessage="Debe Ingresar un Password" />
+					<p:outputLabel value="Roles" />
+
+
+					<p:selectManyCheckbox id="rol"
+						style="width: 200pt !important;"
+						value="#{usuarioBean.rolId}">
+
+						<f:selectItems value="#{usuarioBean.listaTodosLosRoles}"
+							itemLabel="#{rol.nombre}" var="rol" itemValue="#{rol.id}" />
+					</p:selectManyCheckbox>
+
+
+					<h:outputLabel></h:outputLabel>
+
+					<p:commandButton id="submit-button" value="Crear Usuario"
+						oncomplete="" styleClass="botonCrear"
+						action="#{usuarioBean.crearUsuario()}" update="errorMessege" />
+					<h:outputLabel></h:outputLabel>
+
+
+					<h:message for="crearUsuarioForm" showSummary="true" />
+
+				</h:panelGrid>
+
+			</h:form>
+
+		</h:panelGroup>
+
+	</p:dialog>
+
+	<p:dialog widgetVar="modificar" id="panelModificar" modal="false"
+		header="Modificar Usuario">
+		<h:panelGroup style="display:block; text-align:center">
+
+
+			<h:form id="modificarUsuario" styleClass="formulario">
+				<p:autoUpdate />
+				<h:panelGroup style="display:block; text-align:center">
+
+					<h:panelGrid columns="2" id="panelFormulario" cellspacing="5"
+						styleClass="formulario" cellpadding="5">
+
+						<p:outputLabel value="Nombre" />
+						<p:inputText id="nombre" value="#{usuarioBean.nombres}"
+							requiredMessage="Debe ingresar un Nombre" pt:placeholder="Nombre" />
+						<p:outputLabel value="Apellido" />
+
+						<p:inputText id="apellidos" value="#{usuarioBean.apellidos}"
+							requiredMessage="Debe Ingresar un Apellido"
+							pt:placeholder="Apellido" />
+						<p:outputLabel value="Direccion" />
+
+						<p:inputText id="direccion" value="#{usuarioBean.direccion}"
+							requiredMessage="Debe Ingresar una Direccion"
+							pt:placeholder="Direccion" />
+						<p:outputLabel value="Correo" />
+
+						<p:inputText id="correo" value="#{usuarioBean.correo}"
+							requiredMessage="Debe Ingresar un Correo Electronico"
+							pt:placeholder="Correo Electronico" />
+						<p:outputLabel value="Tipo De Documento" />
+
+						<p:selectOneMenu id="tipoDocumento"
+							style="	width: 200pt !important;"
+							value="#{usuarioBean.tipoDocumento}">
+
+
+							<f:selectItems value="#{enumeradosBean.tipoDocumento}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Documento" />
+
+						<p:inputText id="documento" value="#{usuarioBean.documento}"
+							requiredMessage="Debe Ingresar un Documento"
+							pt:placeholder="Documento" />
+						<p:outputLabel value="Username" />
+
+						<p:inputText id="username" value="#{usuarioBean.username}"
+							pt:placeholder="Username"
+							requiredMessage="Debe Ingresar un Username" />
+
+						<p:outputLabel value="Password" />
+
+
+						<p:password id="password" type="" value="#{usuarioBean.password}"
+							pt:placeholder="Password"
+							converterMessage="Debe Ingresar Solo Numeros"
+							requiredMessage="Debe Ingresar un Password" />
+						<p:outputLabel value="Rol" />
+
+						<p:selectManyCheckbox id="rol"
+							style="	width: 200pt !important;"
+							value="#{usuarioBean.rolId}">
+
+							<f:selectItems value="#{usuarioBean.listaTodosLosRoles}"
+								itemLabel="#{rol.nombre}" var="rol" itemValue="#{rol.id}" />
+						</p:selectManyCheckbox>
+
+
+						<h:outputLabel></h:outputLabel>
+
+						<p:commandButton id="submit-button" value="Guardar"
+							oncomplete="" styleClass="botonCrear" update="errorMessege"
+							action="#{usuarioBean.modificarUsuario()}" />
+						<h:outputLabel></h:outputLabel>
+
+
+
+					</h:panelGrid>
+				</h:panelGroup>
+
+			</h:form>
+		</h:panelGroup>
+
+	</p:dialog>
+	<p:dialog widgetVar="detalles" id="panelDetalles" modal="true"
+		header="Detalles Usuario">
+		<h:panelGroup style="display:block; text-align:center"
+			styleClass="formulario">
+			<h:form styleClass="formulario">
+				<p:autoUpdate />
+
+				<h:panelGroup style="display:block; text-align:center"
+					styleClass="formulario">
+
+					<h:panelGrid columns="1" id="panelFormulario" cellspacing="5"
+						cellpadding="5">
+
+
+						<p:outputLabel value="Nombre: #{usuarioBean.nombres}"
+							styleClass="textoFormulario" />
+					
+						<p:outputLabel value="Apellido: #{usuarioBean.apellidos}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Direccion: #{usuarioBean.direccion}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Correo: #{usuarioBean.correo}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Documento: #{usuarioBean.documento}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Username : #{usuarioBean.username}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Rol : #{usuarioBean.roles}"
+							styleClass="textoFormulario" />
+						<h:outputLabel></h:outputLabel>
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</h:panelGroup>
+
+	</p:dialog>
+
+
+	<p:confirmDialog message="Estas Seguro?" header="Confirmation"
+		severity="alert" widgetVar="confirmation">
+		<p:commandButton value="Si"
+			action="#{usuarioBean.iniciarModificacionUsuario(usuario)}"
+			immediate="true" onclick="PF('confirmation').hide();" />
+		<p:commandButton value="No" onclick="PF('confirmation').hide();"
+			type="button" />
+	</p:confirmDialog>
+	<div class="contenedor">
+
+	<h:panelGrid id="tabla">
+		<h:panelGroup style="display:block; text-align:center">
+			<h:form>
+				<p:dataTable var="usuario" widgetVar="usuarioTable"
+					emptyMessage="No se han encontrado Usuarios"
+					value="#{usuarioBean.listadoUsuarios}" styleClass="tableUsuarios"
+					filteredValue="#{usuarioBean.listadoUsuariosFiltrada}"
+					id="tablaUsuarios" scrollHeight="100px" sortBy="#{!usuario.activo}"
+					globalFilterFunction="#{usuarioBean.globalFilterFunction}">
+					<p:autoUpdate />
+					<f:facet name="header">
+
+
+						<p:outputPanel style="text-align: right; padding: 10px">
+
+							<h:outputText value="Buscar:" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('usuarioTable').filter()"
+								style="width:150px; margin-left: 10px" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Nombre" id="nombreColum"
+						sortBy="#{usuario.nombres}">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:outputLabel value="#{usuario.nombres}" />
+						</h:panelGroup>
+
+					</p:column>
+
+					<p:column headerText="Apellido" sortBy="#{usuario.apellidos}">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:outputLabel value="#{usuario.apellidos}" />
+						</h:panelGroup>
+
+					</p:column>
+
+					<p:column headerText="Username" sortBy="#{usuario.username}">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:outputLabel value="#{usuario.username}" />
+						</h:panelGroup>
+
+					</p:column>
+<p:column headerText="Documento" id="documentoColum"
+						sortBy="#{usuario.documento}">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:outputLabel value="#{usuario.documento}" />
+						</h:panelGroup>
+
+					</p:column>
+					<p:column headerText="Estado" sortBy="#{usuario.activo}">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:outputLabel
+								value="#{usuario.activo?'Activado' : 'Desactivado'}" />
+						</h:panelGroup>
+
+					</p:column>
+
+					<p:column headerText="Ver Detalles">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:commandButton icon="pi pi-check"
+							update="panelDetalles"	action="#{usuarioBean.verDetalles(usuario)}" immediate="true"
+								value="Detalles" />
+						</h:panelGroup>
+
+					</p:column>
+					<p:column headerText="Editar">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:commandButton
+								action="#{usuarioBean.iniciarModificacionUsuario(usuario)}"
+								icon="pi pi-pencil" update="panelModificar"
+								immediate="true" value="Editar" styleClass="botonTabla" />
+						</h:panelGroup>
+
+					</p:column>
+
+					<p:column headerText="Activar/Desactivar">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:commandButton icon="ui-icon ui-icon-trash" immediate="true"
+								styleClass="botonTabla"
+								action="#{usuarioBean.borrarUsuario(usuario)}"
+								value="#{usuario.activo?'Desactivar' : 'Activar'}"
+								update="panelModificar" />
+						</h:panelGroup>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</h:panelGroup>
+
+	</h:panelGrid>
+		</div>
+	
+	<p:commandButton id="submit-button" value="Crear Usuario"
+		styleClass="botonCrear" style="	margin-left:5%; margin-bottom:5%"
+		immediate="true" actionListener="#{usuarioBean.borrarValores()}"
+		action="#{usuarioBean.botonCrear()}" />
+
+<!-- Pie de página -->
+<span class="pie-pagina p-t-0 p-b-5">
+	<h:graphicImage value="/resources/images/utec.png" width="185dp" height="103dp"/>
+</span> 
+<span class="pie-pagina p-t-0 p-b-5">
+ 	Proyecto Final - Grupo G13 - ITR SO
+</span> 
+
+
+<h:outputScript library="vendor" name="bootstrap/js/popper.js" />
+<h:outputScript library="vendor" name="bootstrap/js/bootstrap.min.js" />
+<h:outputScript library="vendor" name="select2/select2.min.js"/>
+<h:outputScript library="js" name="main.js"/>
+
+</h:body>
+</html>

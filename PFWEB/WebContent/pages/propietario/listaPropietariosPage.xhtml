@@ -1,0 +1,351 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<title>Propietarios - G13</title>
+		<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+	<ui:include src="/pages/_header.xhtml"></ui:include>
+
+
+
+</h:head>
+
+<f:metadata>
+	<f:viewAction action="#{propietariosBean.obtenerListaPropietarios()}" />
+</f:metadata>
+<h:body>
+
+<ui:include src="/pages/menu_header.xhtml"></ui:include>
+
+
+
+											<h:panelGroup style="display:block; text-align:center">
+
+<h2>Propietarios</h2>
+
+											</h:panelGroup>
+
+	<p:dialog header="Alerta" widgetVar="messegeDiolog" id="messegeDiolog"
+		minHeight="40" styleClass="dialogoAlerta">
+						<h:panelGrid columns="1" cellspacing="5">
+						
+			<h:outputLabel value="#{propietariosBean.messege}" id="errorMessege"
+				></h:outputLabel>
+											<h:panelGroup style="display:block; text-align:center">
+
+			<p:commandButton id="aceptar-button" value="Aceptar" action="#{propietariosBean.ocultarMensaje()}" />
+		</h:panelGroup></h:panelGrid>
+		
+		
+	</p:dialog>
+
+	<p:dialog widgetVar="crear" modal="true" header="Crear Propietario">
+		<h:panelGroup style="display:block; text-align:center">
+			<p:autoUpdate />
+
+			<h:form id="crearPropietarioForm">
+				<h:panelGrid columns="2" id="panelFormulario" cellspacing="5"
+					styleClass="formulario">
+
+					<p:outputLabel value="Nombre" />
+					<p:inputText id="nombre" value="#{propietariosBean.nombre}"
+						requiredMessage="Debe ingresar un Nombre" pt:placeholder="Nombre"
+						validatorMessage="Solo Letras" type="text" />
+
+					<p:outputLabel value="Razon Social" />
+
+					<p:inputText id="razonSocial"
+						value="#{propietariosBean.razonSocial}"
+						requiredMessage="Debe Ingresar una Razon Social"
+						pt:placeholder="Razon Social" />
+					<p:outputLabel value="Direccion" />
+
+					<p:inputText id="direccion" value="#{propietariosBean.direccion}"
+						requiredMessage="Debe Ingresar una Direccion"
+						pt:placeholder="Direccion" />
+					<p:outputLabel value="Correo" />
+
+					<p:inputText id="correo" value="#{propietariosBean.correo}"
+						requiredMessage="Debe Ingresar un Correo Electronico"
+						pt:placeholder="Correo Electronico" />
+					<p:outputLabel value="Telefono" />
+
+					<p:inputText id="telefono" value="#{propietariosBean.telefono}"
+						requiredMessage="Debe Ingresar un Telefono"
+						pt:placeholder="Telefono">
+					</p:inputText>
+					<p:outputLabel value="Contacto" />
+
+					<p:inputText id="contacto"
+						value="#{propietariosBean.contactoReferencia}"
+						pt:placeholder="Contacto"
+						requiredMessage="Debe Ingresar un Contacto" />
+					<p:outputLabel value="Rut" />
+
+
+
+					<p:inputText id="rut" value="#{propietariosBean.rut}"
+						pt:placeholder="Rut" converterMessage="Debe Ingresar Solo Numeros"
+						requiredMessage="Debe Ingresar un Rut" />
+
+
+					<h:outputLabel></h:outputLabel>
+
+					<p:commandButton id="submit-button" value="Crear Propietario"
+						oncomplete="" styleClass="botonCrear"
+						action="#{propietariosBean.crearPropietario()}"
+						update="messegeDiolog" />
+					<h:outputLabel></h:outputLabel>
+
+
+
+				</h:panelGrid>
+
+			</h:form>
+
+		</h:panelGroup>
+
+	</p:dialog>
+
+	<p:dialog widgetVar="modificar" id="panelModificar" modal="false"
+		header="Modificar Propietario">
+		<h:panelGroup style="display:block; text-align:center">
+
+
+			<h:form id="modificarPropietario" styleClass="formulario">
+				<p:autoUpdate />
+				<h:panelGroup style="display:block; text-align:center">
+
+					<h:panelGrid columns="2" id="panelFormulario" cellspacing="5"
+						styleClass="formulario" cellpadding="5">
+
+						<p:outputLabel value="Nombre" />
+						<p:inputText id="nombre" value="#{propietariosBean.nombre}"
+							requiredMessage="Debe ingresar un Nombre" pt:placeholder="Nombre"
+							validatorMessage="Solo Letras" type="text">
+						</p:inputText>
+						<p:outputLabel value="Razon Social" />
+
+						<p:inputText id="razonSocial"
+							value="#{propietariosBean.razonSocial}"
+							requiredMessage="Debe Ingresar una Razon Social"
+							pt:placeholder="Razon Social" />
+						<p:outputLabel value="Direccion" />
+
+						<p:inputText id="direccion" value="#{propietariosBean.direccion}"
+							requiredMessage="Debe Ingresar una Direccion"
+							pt:placeholder="Direccion" />
+						<p:outputLabel value="Correo" />
+
+						<p:inputText id="correo" value="#{propietariosBean.correo}"
+							requiredMessage="Debe Ingresar un Correo Electronico"
+							pt:placeholder="Correo Electronico" />
+						<p:outputLabel value="Telefono" />
+
+						<p:inputText id="telefono" value="#{propietariosBean.telefono}"
+							requiredMessage="Debe Ingresar un Telefono"
+							pt:placeholder="Telefono" />
+						<p:outputLabel value="Contacto" />
+
+						<p:inputText id="contacto"
+							value="#{propietariosBean.contactoReferencia}"
+							pt:placeholder="Contacto"
+							requiredMessage="Debe Ingresar un Contacto" />
+
+						<p:outputLabel value="Rut" />
+
+
+						<p:inputText id="rut" value="#{propietariosBean.rut}"
+							converterMessage="Debe Ingresar Solo Numeros"
+							requiredMessage="Debe Ingresar un Rut" />
+
+
+						<h:outputLabel></h:outputLabel>
+
+						<p:commandButton id="submit-button" value="Guardar" oncomplete=""
+							styleClass="botonCrear" update="messegeDiolog"
+							action="#{propietariosBean.modificarPropietario()}" />
+						<h:outputLabel></h:outputLabel>
+
+
+
+					</h:panelGrid>
+				</h:panelGroup>
+
+			</h:form>
+		</h:panelGroup>
+
+	</p:dialog>
+	<p:dialog widgetVar="detalles" id="panelDetalles" modal="true"
+		header="Detalles Propietario">
+		<h:panelGroup style="display:block; text-align:center"
+			styleClass="formulario">
+			<h:form styleClass="formulario">
+				<p:autoUpdate />
+
+				<h:panelGroup style="display:block; text-align:center"
+					styleClass="formulario">
+
+					<h:panelGrid columns="1" id="panelFormulario" cellspacing="5"
+						cellpadding="5">
+
+
+						<p:outputLabel value="Nombre: #{propietariosBean.nombre}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Rut: #{propietariosBean.rut}"
+							styleClass="textoFormulario" />
+						<p:outputLabel
+							value="Razon Social: #{propietariosBean.razonSocial}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Direccion: #{propietariosBean.direccion}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Correo: #{propietariosBean.correo}"
+							styleClass="textoFormulario" />
+						<p:outputLabel value="Telefono: #{propietariosBean.telefono}"
+							styleClass="textoFormulario" />
+						<p:outputLabel
+							value="Contacto de Referencia: #{propietariosBean.contactoReferencia}"
+							styleClass="textoFormulario" />
+						<h:outputLabel></h:outputLabel>
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</h:panelGroup>
+
+	</p:dialog>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+	<p:confirmDialog message="Estas Seguro?" header="Confirmation"
+		severity="alert" widgetVar="confirmation">
+		<p:commandButton value="Si"
+			action="#{propietariosBean.iniciarModificacionPropietario(propietario)}"
+			immediate="true" onclick="PF('confirmation').hide();" />
+		<p:commandButton value="No" onclick="PF('confirmation').hide();"
+			type="button" />
+	</p:confirmDialog>
+	<div class="contenedor">
+
+
+	<h:panelGrid id="tabla">
+		<h:panelGroup style="display:block; text-align:center">
+
+			<h:form title="Propietarios">
+
+
+				<p:dataTable var="propietario" widgetVar="propietarioTable"
+					value="#{propietariosBean.listaPropietarios}"
+					emptyMessage="No se han encontrado Propietarios"
+					styleClass="tablePropietarios" id="tablaPropietarios"
+					filteredValue="#{propietariosBean.listaPropietariosFiltrada}"
+					scrollHeight="100px" sortBy="#{!propietario.activo}"
+					globalFilterFunction="#{propietariosBean.globalFilterFunction}"
+					scrollable="true">
+					<p:autoUpdate />
+
+					<f:facet name="header">
+
+
+						<p:outputPanel style="text-align: right; padding: 10px">
+
+							<h:outputText value="Buscar:" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('propietarioTable').filter()"
+								style="width:150px; margin-left: 10px" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Nombre" id="nombreColum"
+						sortBy="#{propietario.nombre}">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:outputLabel value="#{propietario.nombre}" />
+						</h:panelGroup>
+
+					</p:column>
+
+					<p:column headerText="Rut" sortBy="#{propietario.rut}">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:outputLabel value="#{propietario.rut}" />
+						</h:panelGroup>
+
+					</p:column>
+
+					<p:column headerText="Estado" sortBy="#{propietario.activo}">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:outputLabel
+								value="#{propietario.activo?'Activado' : 'Desactivado'}" />
+						</h:panelGroup>
+
+					</p:column>
+					<p:column headerText="Ver Detalles">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:commandButton icon="pi pi-check"
+								action="#{propietariosBean.verDetalles(propietario)}"
+								immediate="true" value="Detalles" />
+						</h:panelGroup>
+
+					</p:column>
+					<p:column headerText="Editar">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:commandButton
+								action="#{propietariosBean.iniciarModificacionPropietario(propietario)}"
+								icon="pi pi-pencil" update="messegeDiolog"
+								immediate="true" value="Editar" styleClass="botonTabla" />
+						</h:panelGroup>
+
+					</p:column>
+
+					<p:column headerText="Activar/Desactivar">
+						<h:panelGroup style="display:block; text-align:center">
+
+							<p:commandButton icon="ui-icon ui-icon-trash" immediate="true"
+								action="#{propietariosBean.borrarPropietario(propietario)}"
+								value="#{propietario.activo?'Desactivar' : 'Activar'}"
+								update="panelModificar" styleClass="botonTabla" />
+						</h:panelGroup>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</h:panelGroup>
+	</h:panelGrid>
+	</div>
+	
+	<p:commandButton id="submit-button" value="Crear Propietario"
+		update="messegeDiolog" styleClass="botonCrear"
+		style="	margin-left:5%; margin-bottom:5%" immediate="true"
+		actionListener="#{propietariosBean.borrarValores()}"
+		action="#{propietariosBean.botonCrear()}" />
+
+
+<!-- Pie de página -->
+<span class="pie-pagina p-t-0 p-b-5">
+	<h:graphicImage value="/resources/images/utec.png" width="185dp" height="103dp"/>
+</span> 
+<span class="pie-pagina p-t-0 p-b-5">
+ 	Proyecto Final - Grupo G13 - ITR SO
+</span> 
+
+
+<h:outputScript library="vendor" name="bootstrap/js/popper.js" />
+<h:outputScript library="vendor" name="bootstrap/js/bootstrap.min.js" />
+<h:outputScript library="vendor" name="select2/select2.min.js"/>
+<h:outputScript library="js" name="main.js"/>
+</h:body>
+</html>

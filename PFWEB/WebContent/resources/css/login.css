@@ -1,0 +1,79 @@
+@charset "ISO-8859-1";
+
+body{    
+	
+background: #56CCF2;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+     width:80%;
+     height: 80%;
+      display: block;
+    text-align: center;
+    	font-family: sans-serif;
+    font-size: 30pt;
+     	margin: 0;
+	padding: 0;
+	
+     }
+#mapid { height: 180px; }
+    
+     
+form{
+	margin-top: 20%;
+		   margin-left: 15%;
+    margin-right:15%;
+    width: 50%;
+    height: 30%;
+        font-size: 30pt;
+    
+}
+     
+select, textarea, h1, outputText, inputText{
+    color: black;
+    	font-family: sans-serif;
+    
+}
+input{
+	border: none;
+		border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	border-bottom-style: hidden;
+		font-family: sans-serif;
+	    font-size: 30pt;
+	
+}
+
+textarea:focus, input:focus {
+    color: black;
+    	font-family: sans-serif;
+    
+}
+.etiquetasLogin{
+	    color: #ffffff;
+	
+}
+
+.errorMensaje{
+	color: white;
+	    text-align: center;
+	padding-right: 200dp;
+	padding-left: 200dp
+}
+
+
+.botonLogin{
+		border: none;
+	
+		border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	background: black;
+	color: #ffffff;
+	font-family: sans-serif;
+	    font-size: 30pt;
+	
+	}
+	
