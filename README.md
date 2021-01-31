@@ -14,7 +14,7 @@ El proyecto se divide en 5 subproyectos:
 
  - PDT: Incluye el modelo de entidades creada en java enterprise 
  - PFREST:  Incluye el api rest del proyecto 
- - PFWEB: Cliente web creado con uso del framework jsf 
+ - PFWEB: Cliente web creado con uso del framework jsf ademas de tecnologias web(html, css, js)
  - PFEAR: Empaqueta los otros módulos del proyecto
  - PFMOVIL: Aplicación móvil del proyecto(no incluida en este git)
  
