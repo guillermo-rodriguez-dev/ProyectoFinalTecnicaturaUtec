@@ -6,7 +6,7 @@ El publico objetivo de la aplicación son productores rurales, ingenieros agrón
 
 # Ejemplo de uso
 
-**![](https://lh4.googleusercontent.com/YHVA1-8kSIAB61UbznmH_CQdIyZtng3u66LRvMinI2yTkq_2VP_-QfLmlYHTViYVka0WYzB3146RaIX379B5O1j5-mDyfkzc6O17g1ymOg5zHVP1InUcVhpG-weTC6pR5tYCAzHCMpc)**
+**![](https://github.com/guille-developer/ProjecttoFinalTecnicatura/blob/master/ejemplo.gif?raw=true)**
 
 ## Detalles del proyecto
 
